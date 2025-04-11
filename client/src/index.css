@@ -1,0 +1,231 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    @apply antialiased bg-background text-foreground;
+  }
+  
+  h1, h2, h3, h4, h5, h6, .font-medium {
+    font-family: 'Barlow', sans-serif;
+    font-weight: 500; /* Medium */
+  }
+  
+  p, .font-light {
+    font-family: 'Barlow', sans-serif;
+    font-weight: 200; /* ExtraLight */
+  }
+  
+  :root {
+    --primary: 24 100% 52%; /* #FF6713 in HSL */
+    --primary-lighter: 24 100% 52%; /* #FF600A in HSL */
+    --dark: 0 0% 15%; /* #262626 in HSL */
+    --light: 0 0% 100%; /* #FFFFFF in HSL */
+    
+    --shimmer-gradient: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.3) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    
+    --noise-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch' seed='7'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+}
+
+@layer components {
+  /* Enhanced form elements */
+  .form-input-icon {
+    @apply absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400;
+  }
+  
+  .form-input-enhanced {
+    @apply pl-10 bg-gray-50/50 border-gray-200 focus:bg-white transition-all;
+  }
+  
+  .form-label-enhanced {
+    @apply text-sm font-medium text-gray-700;
+  }
+}
+
+@layer utilities {
+  /* Shimmer animation for buttons and cards */
+  .animate-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .animate-shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -100%;
+    bottom: 0;
+    left: 0;
+    background-image: var(--shimmer-gradient);
+    animation: shimmer 2.5s infinite;
+    transform: translateX(-100%);
+    pointer-events: none;
+  }
+  
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  /* Elegant hover effects */
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-md;
+  }
+  
+  .hover-glow {
+    @apply transition-all duration-300;
+    position: relative;
+  }
+  
+  .hover-glow::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at center, var(--tw-gradient-from), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+  
+  .hover-glow:hover::before {
+    opacity: 0.7;
+  }
+  
+  /* Filter popover styling */
+  .filter-popover {
+    position: fixed !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+    border: 1px solid rgba(124, 58, 237, 0.15) !important;
+  }
+  
+  /* Premium Template Styling */
+  /* Template Corner Styles */
+  .corner-rounded #promoter-profile .header,
+  .corner-rounded #promoter-profile .card {
+    @apply rounded-xl overflow-hidden;
+  }
+  
+  .corner-sharp #promoter-profile .header,
+  .corner-sharp #promoter-profile .card {
+    @apply rounded-none;
+  }
+  
+  .corner-fancy #promoter-profile .header {
+    @apply rounded-tl-3xl rounded-br-3xl;
+  }
+  
+  .corner-fancy #promoter-profile .card {
+    @apply rounded-tr-2xl rounded-bl-2xl;
+  }
+  
+  /* Photo Frame Styles */
+  .frame-simple #promoter-profile .photo-container {
+    @apply border border-gray-200 p-1;
+  }
+  
+  .frame-shadow #promoter-profile .photo-container {
+    @apply shadow-xl;
+  }
+  
+  .frame-border #promoter-profile .photo-container {
+    @apply border-4 border-white shadow-lg;
+  }
+  
+  .frame-polaroid #promoter-profile .photo-container {
+    @apply border-8 border-t-8 border-white shadow-lg rotate-1;
+  }
+  
+  /* Premium Template Features */
+  .premium-template #promoter-profile {
+    @apply relative;
+  }
+  
+  .premium-template #promoter-profile::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-b from-transparent to-gray-50/40 pointer-events-none z-0;
+  }
+  
+  /* Template Layout Styles */
+  .template-premium #promoter-profile .header {
+    @apply bg-gradient-to-r shadow-lg;
+  }
+  
+  .template-elegant #promoter-profile .header {
+    @apply bg-gradient-to-br shadow-md;
+  }
+  
+  .template-corporate #promoter-profile .header {
+    @apply border-l-4;
+  }
+  
+  /* Background Patterns */
+  .pattern-dots #promoter-profile {
+    background-image: radial-gradient(currentColor 1px, transparent 1px);
+    background-size: 20px 20px;
+    @apply text-gray-200/30;
+  }
+  
+  .pattern-lines #promoter-profile {
+    background-image: linear-gradient(90deg, currentColor 1px, transparent 1px),
+                     linear-gradient(currentColor 1px, transparent 1px);
+    background-size: 25px 25px;
+    @apply text-gray-100/30;
+  }
+  
+  .pattern-waves #promoter-profile {
+    background-image: repeating-radial-gradient(
+      circle at 0 0,
+      transparent 0,
+      currentColor 10px
+    ),
+    repeating-linear-gradient(currentColor, transparent);
+    background-size: 40px 40px;
+    @apply text-purple-100/10;
+  }
+  
+  /* Texture Overlays */
+  .texture-paper #promoter-profile::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paperFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paperFilter)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    mix-blend-mode: soft-light;
+    pointer-events: none;
+    z-index: 10;
+  }
+  
+  .texture-grain #promoter-profile::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.1;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 10;
+  }
+}

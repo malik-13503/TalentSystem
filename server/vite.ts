@@ -73,14 +73,12 @@ export function serveStatic(app: Express) {
   // Add this check
   if (fs.existsSync(staticPath)) {
     app.use(express.static(staticPath));
+    
+    // fall through to index.html if the file doesn't exist
+    app.use("*", (_req, res) => {
+      res.sendFile(path.resolve(staticPath, "index.html"));
+    });
   } else {
     console.warn(`Static path ${staticPath} does not exist. Skipping static file serving.`);
   }
-}
-  app.use(express.static(distPath));
-
-  // fall through to index.html if the file doesn't exist
-  app.use("*", (_req, res) => {
-    res.sendFile(path.resolve(distPath, "index.html"));
-  });
 }
